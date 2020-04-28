@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Command the Bot"
+        android:textAllCaps="true"
+        android:textSize="25dp"
+        android:padding="10dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:id="@+id/tv_three"
+        android:gravity="center"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Source"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:layout_below="@id/tv_three"
+        android:id="@+id/tv_source"
+        android:gravity="center"/>
+
+
+    <Spinner
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spn_source"
+        android:entries="@array/points"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_source"
+        ></Spinner>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Destination"
+        android:textSize="20dp"
+        android:padding="5dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:id="@+id/tv_dest"
+        android:layout_below="@id/spn_source"
+        android:gravity="center"/>
+
+    <Spinner
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spn_dest"
+        android:entries="@array/points"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_dest"
+        ></Spinner>
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spn_dest"
+        android:layout_centerHorizontal="true"
+        android:text="call bot"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/btn_call_bot"
+        android:layout_marginTop="30dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_call_bot"
+        android:layout_centerHorizontal="true"
+        android:text="send bot"
+        android:paddingTop="10dp"
+        android:visibility="gone"
+        android:layout_marginTop="30dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/btn_send_bot"
+        />
+
+
+
+</RelativeLayout>

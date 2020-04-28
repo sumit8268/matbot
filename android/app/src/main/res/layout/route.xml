@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add a new route"
+        android:textAllCaps="true"
+        android:textSize="25dp"
+        android:padding="10dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:id="@+id/tv_route"
+        android:gravity="center"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_route"
+        android:fadeScrollbars="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_route_source"
+            android:hint="Enter Source"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_route_source"
+            android:id="@+id/et_route_dest"
+            android:layout_marginTop="10dp"
+            android:hint="Enter Destination"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_route_dest"
+            android:id="@+id/et_route_color1"
+            android:layout_marginTop="10dp"
+            android:hint="Enter Color 1"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_route_color1"
+            android:id="@+id/et_route_color2"
+            android:layout_marginTop="10dp"
+            android:hint="Enter Color 2"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="20dp"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_route_color2"
+            android:id="@+id/et_route_color3"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:hint="Enter Color 3"
+            android:gravity="center"
+            android:textSize="20dp"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_route_color3"
+            android:id="@+id/et_route_color4"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:hint="Enter Color 4"
+            android:gravity="center"
+            android:textSize="20dp"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_route_color4"
+            android:id="@+id/et_route_color5"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:hint="Enter Color 5"
+            android:gravity="center"
+            android:textSize="20dp"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_route_color5"
+            android:id="@+id/et_route_color6"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:hint="Enter Color 6"
+            android:gravity="center"
+            android:textSize="20dp"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_route_color6"
+            android:id="@+id/et_route_color7"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:hint="Enter Color 7"
+            android:gravity="center"
+            android:textSize="20dp"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_route_color7"
+            android:id="@+id/et_route_color8"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:hint="Enter Color 8"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_route_addcolor"
+            android:layout_below="@id/et_route_color8"
+            android:layout_centerHorizontal="true"
+            android:text="Add Color"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_route_addroute"
+            android:layout_below="@id/btn_route_addcolor"
+            android:layout_centerHorizontal="true"
+            android:text="Add Route"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="10dp"/>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

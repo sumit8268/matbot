@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MatBot</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string-array name="points">
+        <item>point1</item>
+        <item>point2</item>
+        <item>point3</item>
+        <item>point4</item>
+    </string-array>
+</resources>
