@@ -1,39 +1,25 @@
-<?php  
-  
-$con = mysqli_connect('localhost','root','');  
-  
-if(!$con)  
-{  
-    echo 'not connect to the server';  
-}  
-if(!mysqli_select_db($con,'matbot'))  
-{  
-    echo 'database not selected';  
-}  
+<?php
 
-@$source = $_POST['source'];
-@$dest = $_POST['dest'];
+include('db_connection.php'); 
 
+global $conn ;
+mysqli_set_charset($conn, 'utf8');
 
+$source = $_POST['source'];
+$dest = $_POST['dest'];
+if(!empty($source) && !empty($dest)){
+$sql = "INSERT INTO current (source,destination) VALUES ('$source','$dest')";
 
-
-if($source != '' && $dest != ''){
-    $sql = "INSERT INTO current VALUES ('$source','$dest')";  
+if ($conn->query($sql) === TRUE) {
+    $flag['success']="Data inserted successfully";
+    $flag['free_bot']="true";
+} else {
+    $flag['success']="Data insertion failed";
+    $flag['free_bot']=FALSE;
 }
-    @$myobj->success = 'Not inserted';
-
-    if(@!mysqli_query($con,$sql)) 
-    {  
-        $myobj["success"] = 'Not inserted'; 
-        $myobj["free_bot"] = 'false';   
-    }  
-    else  
-    {  
-        $myobj["success"] = 'Data Inserted';
-        $myobj["free_bot"] = 'true';  
-    }
-
-    $myjson = json_encode($myobj);
-    echo $myjson;
-
+} else {
+    $flag['success']="Data insertion failed";
+    $flag['free_bot']="false";
+}
+print(json_encode($flag));
 ?>

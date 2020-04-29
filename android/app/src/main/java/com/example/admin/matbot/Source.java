@@ -21,10 +21,13 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.logging.Logger;
 
 /**
  * Created by Admin on 25-04-2020.
@@ -35,6 +38,12 @@ public class Source extends AppCompatActivity {
     Button call, send;
     String source_ptn, dest_ptn;
     boolean free_bot = false;
+    String status11;
+
+    private InputStream is=null;
+    private String result=null;
+    private String line=null;
+    private int code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +58,22 @@ public class Source extends AppCompatActivity {
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                source_ptn = source.getSelectedItem().toString();
-                dest_ptn = dest.getSelectedItem().toString();
-                Toast.makeText(Source.this, source_ptn+" -> "+dest_ptn, Toast.LENGTH_SHORT).show();
-                new MyAsyncTasksw1().execute();
-                if(free_bot == true){
-                    send.setVisibility(View.VISIBLE);
-                }else{
-                    //Toast.makeText(Source.this, "Bot is busy!!", Toast.LENGTH_SHORT).show();
-                }
+                ArrayList<String> mylist = new ArrayList<String>();
+
+                mylist.add(String.valueOf(source.getSelectedItem().toString()));
+                mylist.add(String.valueOf(dest.getSelectedItem().toString()));
+
+                Toast.makeText(Source.this, mylist.get(0) + " -> " + mylist.get(1), Toast.LENGTH_SHORT).show();
+                new sendUserDetailTOServer().execute(mylist);
+
             }
         });
+
+
+
+
+
+
 
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +82,6 @@ public class Source extends AppCompatActivity {
                 source_ptn = source.getSelectedItem().toString();
                 dest_ptn = dest.getSelectedItem().toString();
                 Toast.makeText(Source.this, source_ptn + " -> " + dest_ptn, Toast.LENGTH_SHORT).show();
-                new MyAsyncTasksw2().execute();
 
             }
         });
@@ -77,203 +90,86 @@ public class Source extends AppCompatActivity {
     }
 
 
-    private class MyAsyncTasksw1 extends AsyncTask<String, Void, String>
-    {
-        private ProgressDialog progressDialog = new ProgressDialog(Source.this);
+    public class sendUserDetailTOServer extends AsyncTask< ArrayList<String>, Void, String> {
 
-        protected void onPreExecute()
-        {
-            progressDialog.setMessage("Please Wait");
-            progressDialog.show();
+        private ProgressDialog dialog = new ProgressDialog(Source.this);
 
-
+        @Override
+        protected void onPreExecute() {
+            this.dialog.setMessage("Please wait");
+            this.dialog.show();
         }
-        public void postData(String source_ptn,String dest_ptn)
-        {
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://192.168.43.170/phpmyfiles/call_api.php");
+
+        protected String doInBackground(ArrayList<String>... alldata) {
+
+            ArrayList<String> passed = alldata[0]; //get passed arraylist
+            String source11 = passed.get(0);
+            String dest11 = passed.get(1);
+
 
             try {
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                //nameValuePairs.add(new BasicNameValuePair("f1", usn));
-                nameValuePairs.add(new BasicNameValuePair("source", source_ptn));
-                nameValuePairs.add(new BasicNameValuePair("dest", dest_ptn));
 
+                nameValuePairs.add(new BasicNameValuePair("source", source11 ));
+                nameValuePairs.add(new BasicNameValuePair("dest", dest11));
 
-
-
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                Log.d("nameValuePairs", "" + nameValuePairs);
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost("http://192.168.43.170/phpmyfiles/call_api.php");
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs ,"UTF-8")); // UTF-8  support multi language
                 HttpResponse response = httpclient.execute(httppost);
-
                 HttpEntity entity = response.getEntity();
+                is = entity.getContent();
+
+                BufferedReader reader = new BufferedReader (new InputStreamReader(is,"iso-8859-1"),8);
+                StringBuilder sb = new StringBuilder();
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                is.close();
+                result = sb.toString();
+            }
+            catch(Exception e)
+            {
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
+            try
+            {
+                JSONObject json_data = new JSONObject(result);
+
+                    try {
+                        String success =json_data.getString("success");
+                        free_bot = json_data.getBoolean("free_bot");
 
 
-                // If the response does not enclose an entity, there is no need
-                if (entity != null) {
-                    InputStream instream = entity.getContent();
+                        if (free_bot) {
+                            send.setVisibility(View.VISIBLE);
+                        } else {
+                            Toast.makeText(Source.this, "Bot is busy!!", Toast.LENGTH_SHORT).show();
+                        }
+                        Toast.makeText(Source.this, success, Toast.LENGTH_SHORT).show();
 
-                    String result;
-                    result = convertStreamToString(instream);
-                    Log.d("respo", "" + result);
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString("success");
-                    String state = jsonObject.getString("free_bot");
-                    Toast.makeText(Source.this, "result " + result + "\nstate " + state, Toast.LENGTH_SHORT).show();
 
-                    if(state == "true"){
-                        free_bot = true;
+                    }catch (Exception e){
+
                     }
 
-                    Log.d("status", "" + status);
-
-                    Toast.makeText(Source.this, "result " + result + "\nstatus " + status, Toast.LENGTH_SHORT).show();
 
 
-
-
-                }
-
-
-            } catch (Exception e)
+            }
+            catch(Exception e)
             {
-                e.printStackTrace();
             }
         }
 
-        @Override
-        protected String doInBackground (String...params)
-        {
-            postData(source_ptn, dest_ptn);
-            progressDialog.dismiss();
-            return null;
-        }
-        private  String convertStreamToString(InputStream is)
-        {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            String line = null;
-            try {
-                while ((line = reader.readLine()) != null)
-                {
-                    sb.append(line + "\n");
-                }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                try
-                {
-                    is.close();
-                } catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            return sb.toString();
-        }
-    }
-
-
-    private class MyAsyncTasksw2 extends AsyncTask<String, Void, String>
-    {
-        private ProgressDialog progressDialog = new ProgressDialog(Source.this);
-
-        protected void onPreExecute()
-        {
-            progressDialog.setMessage("Please Wait");
-            progressDialog.show();
-
-
-        }
-        public void postData(String source_ptn,String dest_ptn)
-        {
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://192.168.43.170/phpmyfiles/send_api.php");
-
-            try {
-                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                //nameValuePairs.add(new BasicNameValuePair("f1", usn));
-                nameValuePairs.add(new BasicNameValuePair("source", source_ptn));
-                nameValuePairs.add(new BasicNameValuePair("destination", dest_ptn));
-
-
-
-
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                Log.d("nameValuePairs", "" + nameValuePairs);
-                HttpResponse response = httpclient.execute(httppost);
-
-                HttpEntity entity = response.getEntity();
-
-
-                // If the response does not enclose an entity, there is no need
-                if (entity != null) {
-                    InputStream instream = entity.getContent();
-
-                    String result;
-                    result = convertStreamToString(instream);
-                    Log.d("respo", "" + result);
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString("success");
-
-                    Log.d("status", "" + status);
-
-                    Toast.makeText(Source.this, "result " + result + "\nstatus " + status, Toast.LENGTH_SHORT).show();
-
-
-
-
-                }
-
-
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground (String...params)
-        {
-            postData(source_ptn, dest_ptn);
-            progressDialog.dismiss();
-            return null;
-        }
-        private  String convertStreamToString(InputStream is)
-        {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            String line = null;
-            try {
-                while ((line = reader.readLine()) != null)
-                {
-                    sb.append(line + "\n");
-                }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                try
-                {
-                    is.close();
-                } catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            return sb.toString();
-        }
     }
 
 
