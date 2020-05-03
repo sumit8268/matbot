@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "com.example.admin.matbot"
+        applicationId "com.example.admin.matbot1"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

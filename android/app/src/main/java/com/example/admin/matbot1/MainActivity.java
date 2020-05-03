@@ -1,12 +1,11 @@
-package com.example.admin.matbot;
+package com.example.admin.matbot1;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+
 public class MainActivity extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,17 @@ public class MainActivity extends AppCompatActivity {
             }
         };t.start();
 
-    }
+
+
+
+
+        }
+
+
+
+
+
+
 
 
 

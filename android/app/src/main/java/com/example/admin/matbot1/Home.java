@@ -1,4 +1,4 @@
-package com.example.admin.matbot;
+package com.example.admin.matbot1;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 /**
- * Created by Admin on 25-04-2020.
+ * Created by Admin on 03-05-2020.
  */
 public class Home extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class Home extends AppCompatActivity {
         cmd_bot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplication(), Source.class);
+                Intent i = new Intent(getApplication(), CommandBot.class);
                 startActivity(i);
             }
         });
@@ -32,9 +32,10 @@ public class Home extends AppCompatActivity {
         new_route.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplication(), Route.class);
+                Intent i = new Intent(getApplication(), AddPoint.class);
                 startActivity(i);
             }
         });
+
     }
 }

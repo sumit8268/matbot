@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.admin.matbot" >
+    package="com.example.admin.matbot1" >
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
         android:allowBackup="true"
@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Home"></activity>
-        <activity android:name=".Source"></activity>
-        <activity android:name=".Route"></activity>
+        <activity android:name=".CommandBot"></activity>
+        <activity android:name=".AddPoint"></activity>
     </application>
 
 </manifest>

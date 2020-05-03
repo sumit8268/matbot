@@ -33,7 +33,6 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/spn_source"
-        android:entries="@array/points"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tv_source"
         ></Spinner>
@@ -56,7 +55,6 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/spn_dest"
-        android:entries="@array/points"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tv_dest"
         ></Spinner>
@@ -87,7 +85,5 @@
         android:paddingBottom="10dp"
         android:id="@+id/btn_send_bot"
         />
-
-
 
 </RelativeLayout>

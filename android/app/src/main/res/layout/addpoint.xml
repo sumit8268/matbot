@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add a new Point"
+        android:textAllCaps="true"
+        android:textSize="25dp"
+        android:padding="10dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:id="@+id/tv_point"
+        android:gravity="center"/>
+
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_point_label"
+        android:layout_below="@id/tv_point"
+        android:hint="Enter Point Label"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_point_type"
+        android:hint="Enter Point Type"
+        android:layout_below="@id/et_point_label"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_point_connection"
+        android:hint="Enter Point Connection"
+        android:layout_below="@id/et_point_type"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_point_color"
+        android:hint="Enter Point color"
+        android:layout_below="@id/et_point_connection"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="20dp"/>
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_add_point"
+        android:layout_below="@id/et_point_color"
+        android:layout_centerHorizontal="true"
+        android:text="Add Point"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"/>
+
+
+
+</RelativeLayout>
