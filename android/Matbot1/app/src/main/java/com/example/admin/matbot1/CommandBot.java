@@ -134,7 +134,10 @@ public class CommandBot extends AppCompatActivity {
                     Toast.makeText(getApplication(), json_data.get(0).toString(), Toast.LENGTH_SHORT).show();
                     for(int i=1;i<json_data.length();i++){
                         spinner_data.add(json_data.get(i).toString());
+
                     }
+
+
 
                     ArrayAdapter<String> spinneradapter = new ArrayAdapter<String>(getBaseContext(), R.layout.support_simple_spinner_dropdown_item, spinner_data);
                     source.setAdapter(spinneradapter);
@@ -217,9 +220,10 @@ public class CommandBot extends AppCompatActivity {
 
                 try {
                     Toast.makeText(getApplication(), json_data.get("success").toString(), Toast.LENGTH_SHORT).show();
-                    String free_bot = json_data.get("free_bot").toString();
+                    Boolean free_bot = json_data.getBoolean("free_bot");
+                    Toast.makeText(getApplication(), free_bot.toString(), Toast.LENGTH_SHORT).show();
 
-                    if(free_bot == "true"){
+                    if(free_bot != false){
                         send_bot.setVisibility(View.VISIBLE);
                         Toast.makeText(getApplication(), "Bot will reach here please wait!!", Toast.LENGTH_SHORT).show();
                     }else{

@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_cmd_bot"
         android:id="@+id/btn_new_route"
-        android:text="Add New Route"
+        android:text="Add New Point"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:paddingLeft="20dp"

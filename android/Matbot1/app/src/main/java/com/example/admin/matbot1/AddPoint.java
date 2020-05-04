@@ -87,7 +87,7 @@ public class AddPoint extends AppCompatActivity {
 
 
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://192.168.43.170:5000/call_bot_api");
+                HttpPost httppost = new HttpPost("http://192.168.43.170:5000/add_point_api");
                 nameValuePairs.add(new BasicNameValuePair("label", label1));
                 nameValuePairs.add(new BasicNameValuePair("type", type1));
                 nameValuePairs.add(new BasicNameValuePair("connection", conn1));
