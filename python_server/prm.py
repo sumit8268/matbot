@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 from concurrent.futures import ThreadPoolExecutor
 from motor_driver import *
+from database import *
 
 
 # adding object object to database
@@ -26,42 +27,12 @@ from motor_driver import *
 # flask object
 app = Flask(__name__)
 
+
 # configuring sqlalchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/matbot'
 db = SQLAlchemy(app)
 
-
-# Point table
-class Point(db.Model):
-    point_label =db.Column(db.String(100), primary_key=True)
-    point_type = db.Column(db.String(100))
-    connected_to = db.Column(db.String(100))
-    with_color = db.Column(db.String(100))
-
-    def __repr__(self):
-        return self.point_label
-
-
-# User table
-class User(db.Model):
-    name =db.Column(db.String(100))
-    email = db.Column(db.String(100), primary_key=True)
-    password = db.Column(db.String(100))
-
-    def __repr__(self):
-        return self.email
-
-
-# Work table
-class Work(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    source =db.Column(db.String(100))
-    destination = db.Column(db.String(100))
-    work_done = db.Column(db.String(100))
-
-    def __repr__(self):
-        return f"{self.source} -> {self.destination}"
-
+last_dest = "point2"
 
 
 @app.route("/")
@@ -104,22 +75,29 @@ def get_points_api():
         return result
 
 
+
 # api to call bot to the source
 @app.route("/call_bot_api", methods=['POST', 'GET'])
 def call_bot_api():
     result = json.dumps({'success':'error occurred !!data not inserted', 'free_bot':False})
     try:
+        global last_dest
         source = request.form['source']
         destination = request.form['destination']
+
         if Work.query.one_or_none() == None:
             w = Work(source=source, destination=destination, work_done=False)
             db.session.add(w)
             db.session.commit()
+
+            # executor = ThreadPoolExecutor()
+            # future = executor.submit(call_bot, source, destination)
+
             
             with ThreadPoolExecutor() as executor:
-                future = executor.submit(call_bot, source, destination)
-            
+                future = executor.submit(call_bot, last_dest, source)
             result = json.dumps({'success':'data inserted Bot is arriving', 'free_bot':True})
+            
         else:
             result = json.dumps({'success':'bot is not free!! try later', 'free_bot':False})
     except:
@@ -132,9 +110,10 @@ def call_bot_api():
 @app.route("/send_bot_api", methods=['POST', 'GET'])
 def send_bot_api():
     try:
+        global last_dest
         source = request.form['source']
         destination = request.form['destination']
-        
+        last_dest = destination
             
         with ThreadPoolExecutor() as executor:
             future = executor.submit(send_bot, source, destination)
@@ -147,5 +126,5 @@ def send_bot_api():
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.43.170', port=5000, debug=False)
+    app.run(host='192.168.43.103',port=5000, debug=False)
     # app.run(debug=True)
